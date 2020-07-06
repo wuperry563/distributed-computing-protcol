@@ -6,6 +6,7 @@
  * message to the next node.
  */
 
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -22,6 +23,7 @@ public class Start implements Runnable {
 
     private int id;
     private String config_path;
+    public int numNodes, minPerActive, maxPerActive, minSendDelay, snapshotDelay, maxNumber;
 
     public Start(int id, String config_path) {
         this.id = id;
@@ -47,16 +49,24 @@ public class Start implements Runnable {
         t.start();
     }
 
-    public static void main(String... args) {
-        int no_of_node = Integer.parseInt(args[0]);
-        String config_path = args[1];
+    public static void main(String... args) throws IOException {
+        int no_of_node = 3;
+//        int no_of_node = Integer.parseInt(args[0]);
+        String config_path ;
         /**
          * To run the program manually without passing command line arguments
-         * int no_of_node = 4; String config_path = "configuration.txt";
+         * int no_of_node = 4;
+         *
          */
+        config_path = "config.txt";
+        parseGlobalVars(config_path);
         Start start = new Start(no_of_node, config_path);
         Thread t = new Thread(start);
         t.start();
 
+    }
+
+    private static void parseGlobalVars(String config_path) throws IOException {
+        Parser parser = new Parser(config_path);
     }
 }
