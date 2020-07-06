@@ -1,9 +1,4 @@
 /*
- * Pranjal Patni (pxp142030)
- *
- * @author Pranjal Patni
- * @email pxp142030@utdallas.edu
- * @version 1.0
  *
  * This project focuses on the implementation of a distributed system, where
  * there are several nodes who communicate among each other via messages. Each
@@ -18,7 +13,6 @@ import java.util.Random;
  * program. It generates a new random number before creating a new node and
  * assigns those numbers to the respective node
  *
- * @author Pranjal
  *
  * @variable id is the id of the node to be created
  * @variable config_path is the path of the configuration file from where the

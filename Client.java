@@ -1,24 +1,9 @@
-/*
- * Pranjal Patni (pxp142030)
- *
- * @author Pranjal Patni
- * @email pxp142030@utdallas.edu
- * @version 1.0
- *
- * This project focuses on the implementation of a distributed system, where
- * there are several nodes who communicate among each other via messages. Each
- * node generates a random value and adds its own value while passing the
- * message to the next node.
- */
-
 import java.io.*;
 import java.net.*;
 
 /**
  * Client class creates an object which then connects to the server by creating
  * a TCP socket
- *
- * @author Pranjal
  *
  * @variable client_socket is used to connect to the server socket
  * @variable in is used to receive the token that has been sent by the client

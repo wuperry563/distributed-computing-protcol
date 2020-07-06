@@ -1,8 +1,4 @@
 /*
- * Pranjal Patni (pxp142030)
- *
- * @author Pranjal Patni
- * @email pxp142030@utdallas.edu
  * @version 1.0
  *
  * This project focuses on the implementation of a distributed system, where
@@ -22,7 +18,6 @@ import java.util.Scanner;
  * client is responsible for creating the token and connecting to the server via
  * socket connection
  *
- * @author Pranjal Patni
  * @variable type indicates that whether the node is acting as a server or as a
  * client
  * @variable value is the random value of the token that is assigned to each
@@ -53,7 +48,7 @@ public class Node implements Runnable {
     private String[] all_nodes;
     private int number_of_nodes;
     private Queue<String> all_circuits = new LinkedList<>();
-    //private final String config_file_path = "C:\\Users\\Pranjal\\Documents\\NetBeansProjects\\AdvancedOperatingSystem\\src\\Project1\\configuration.txt";
+    //private final String config_file_path = "C:\\Users\\Perry\\Documents\\NetBeansProjects\\AdvancedOperatingSystem\\src\\Project1\\configuration.txt";
     private final String config_file_path;
     private Token[] token;
 
@@ -120,8 +115,8 @@ public class Node implements Runnable {
      * @throws IOException
      */
     private void createFile(boolean inititate) throws IOException {
-        PrintWriter writer = new PrintWriter("config-pxp142030-" + identifier + ".out", "UTF-8");
-        writer.print("Net ID: pxp142030");
+        PrintWriter writer = new PrintWriter("config-psw101020-" + identifier + ".out", "UTF-8");
+        writer.print("Net ID: psw101020");
         writer.print("\nNode ID: " + identifier);
         String[] nodeDetail = all_nodes[identifier].split(" ");
         writer.print("\nListening on " + nodeDetail[1] + ":" + nodeDetail[2]);

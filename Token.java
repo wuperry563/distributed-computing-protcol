@@ -1,9 +1,4 @@
 /*
- * Pranjal Patni (pxp142030)
- *
- * @author Pranjal Patni
- * @email pxp142030@utdallas.edu
- * @version 1.0
  *
  * This project focuses on the implementation of a distributed system, where
  * there are several nodes who communicate among each other via messages. Each
@@ -18,8 +13,6 @@ import java.io.Serializable;
  * information from one node to another. In order to allow token object to be
  * sent from one node to another, the Token class must implement the marker
  * interface - Serializable
- *
- * @author Pranjal
  * @variable map contains the updated path which the nodes need to follow
  * @variable total_sum holds the most recent value of the token
  * @variable id id of the node that generated the token

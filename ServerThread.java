@@ -1,9 +1,4 @@
 /*
- * Pranjal Patni (pxp142030)
- *
- * @author Pranjal Patni
- * @email pxp142030@utdallas.edu
- * @version 1.0
  *
  * This project focuses on the implementation of a distributed system, where
  * there are several nodes who communicate among each other via messages. Each
@@ -20,7 +15,6 @@ import java.util.logging.Logger;
  * ServerThread class implements Runnable and is used because the node which is
  * acting as the server is implementing a multi threaded server
  *
- * @author Pranjal Patni
  * @variable server_t is a socket object which is passed to the thread handling
  * the corresponding client
  * @variable in is used to receive the token that has been sent by the client

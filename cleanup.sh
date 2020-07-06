@@ -2,7 +2,7 @@
 
 
 # Change this to your netid
-netid=pxp142030
+netid=psw101020
 
 #
 # This assumes your config file is named "config.txt"
@@ -10,7 +10,7 @@ netid=pxp142030
 #
 #CONFIG=$PROJDIR/NOT-THIS-YEARS-CONFIG.txt
 #CONFIG=config.txt Give it as command line argument
-PROJDIR=CS6378/Project1
+PROJDIR=~/dev/CS6378/Project1
 n=0
 
 cat $1 | sed -e "s/#.*//" | sed -e "/^\s*$/d" |
