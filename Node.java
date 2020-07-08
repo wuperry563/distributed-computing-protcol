@@ -44,14 +44,17 @@ public class Node {
     private static int id = -1;
     public static int messagesSent = 0;
     private static final int SOCKET_TIMEOUT = 20000;
+    private static final String MESSAGE_TO_SEND = "lmao";
+    private static PrintWriter writer = null;
 
     private Node() {
     }
 
-    public static Node getInstance(int id){
+    public static Node getInstance(int id) throws Exception{
         if(instance == null){
             Node.instance = new Node();
             instance.id = id;
+            writer = new PrintWriter("config-psw101020-" + id + ".out", "UTF-8");
             messagesSent = 0;
         }
         return Node.instance;
@@ -70,14 +73,26 @@ public class Node {
     //Check if messages are full first, otherwise stay passive.
     //If not full, then turn into client, random pick neighbors, and send those messages with MinSendDelay,
     //With Between minPerActive/maxPerActive messages
-    public void active() {
+    public void activate() {
         //should check if message is full? or "listen's" job?
         int min = Parser.instance.minPerActive;
         int max = Parser.instance.maxPerActive;
-        int messagesToSend = ThreadLocalRandom.current().nextInt(min,max);
+        int messagesToSend = ThreadLocalRandom.current().nextInt(min,1+max);
         for(int i = 0 ; i< messagesToSend ; i++){
             int nodeToMessage = getRandomNodeFromNeighbors();
+            NodeInfo targetNode = Parser.nodes.get(nodeToMessage);
+            try{
+                Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
+                PrintWriter writer = new PrintWriter(client.getOutputStream());
+                writer.println(MESSAGE_TO_SEND);
+                Thread.sleep(Parser.minSendDelay);
+                messagesSent++;
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
         }
+        listen();
     }
 
     private int getRandomNodeFromNeighbors() {
@@ -105,7 +120,7 @@ public class Node {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
                 PrintWriter writer = new PrintWriter(sock.getOutputStream());
                 String message = reader.readLine();
-                System.out.println("message:"+message);
+                System.out.println("Message Received: " +message );
                 if(shouldActivate()){
                     System.out.println("terminating to activate node to send messages.");
                     shouldClose = true;
@@ -113,7 +128,7 @@ public class Node {
                     reader.close();
                     sock.close();
                     // move to active check?
-                    instance.active();
+                    instance.activate();
                 }else{
                     //keep listening?
                 }

@@ -7,7 +7,6 @@
  */
 
 import java.io.IOException;
-import java.util.Random;
 
 /**
  * Start class contains the main method, which is required to execute the
@@ -34,12 +33,12 @@ public class Start {
 //        startNode(id);
 //    }
 
-    private void startNode(int id) {
+    private void startNode(int id) throws Exception{
         Node n = Node.getInstance(id);
-        n.listen();
+        n.activate();
     }
 
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) throws Exception {
         int nodeNumber = Integer.parseInt(args[0]);
         String config_path;
         /**
@@ -49,11 +48,8 @@ public class Start {
          */
         config_path = "config.txt";
         Parser.getInstance(config_path);
-        System.out.println("lmao");
         Start start = new Start(nodeNumber, config_path);
         start.startNode(nodeNumber);
-//        Thread t = new Thread(start);
-//        t.start();
     }
 
 }
