@@ -1,30 +1,83 @@
-import java.io.File;
+import model.NodeInfo;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
-import java.util.regex.Pattern;
+import java.util.*;
 
 public class Parser {
 
-    private Scanner scanner;
-    public static final Pattern LINE_STARTS_WITH_HASH = Pattern.compile("^#.*");
-    public static final Pattern LINE_STARTS_WITH_NUMBER = Pattern.compile("^\\d.*");
-    private String config = "";
-    public Parser(String configFile) throws FileNotFoundException, IOException {
-        File file = new File(configFile);
-        String rawConfig = new String(Files.readAllBytes(Paths.get(configFile)));
-        config = rawConfig.replaceAll("(?m)^#.*", "");
-//        config = config.replaceAll("(?m)\n", "");
-        config.
-        scanner = new Scanner(file);
+    public static final String LINE_SEPARATOR_PROPERTY = System.getProperty("line.separator");
+    public static Parser instance = null;
+    private static String config = "";
+    private static List<String> configArray;
+    public static int numNodes, minPerActive, maxPerActive, minSendDelay, snapshotDelay, maxNumber;
+    public static Map<Integer,NodeInfo> nodes;
 
+    private Parser() {
     }
 
-    public int[] readGlobalVariables(){
+    public static Parser getInstance(String configFile) throws FileNotFoundException, IOException {
+        if(instance == null){
+            instance = new Parser();
+            String rawConfig = new String(Files.readAllBytes(Paths.get(configFile)));
+            instance.config = rawConfig.replaceAll("(?m)^#.*", "");
+            instance.configArray = Arrays.asList(instance.config.split(LINE_SEPARATOR_PROPERTY));
+            nodes = new TreeMap<Integer,NodeInfo>();
+            removeLineSeparation();
+            setGlobalVariables();
+            createNodeInfo();
+        }
+        return instance;
+    }
+
+    private static void createNodeInfo() {
+        NodeInfo node;
+//        List<Integer> neighbors;
+        for(int i = 0; i<instance.numNodes; i++){
+            System.out.println(configArray.get(i+1));
+            String []configNode = configArray.get(i+1).split(" ");
+            node = new NodeInfo();
+            int id = Integer.parseInt(configNode[0]);
+            node.setHostName(configNode[1]);
+            node.setListenPort(Integer.parseInt(configNode[2]));
+            instance.nodes.put(id, node);
+        }
+        for(int i = 1+instance.numNodes; i < configArray.size(); i++){
+            List<Integer> neighbors = new ArrayList<>();
+            int nodeNum = i-1-instance.numNodes;
+            String [] lmao = configArray.get(i).split(" ");
+            Arrays.stream(configArray.get(i).split(" ")).forEach(
+                    s -> {neighbors.add(Integer.parseInt(s));}
+            );
+            nodes.get(nodeNum).setNeighbors(neighbors);
+        }
+    }
+
+    private static void removeLineSeparation() {
+        List<String> newConfigArray = new ArrayList<>();
+        for(int i = 0 ; i < instance.configArray.size();i++){
+            String s = instance.configArray.get(i);
+            if(!s.equals("")){
+                newConfigArray.add(s);
+            }
+        }
+        instance.configArray = newConfigArray;
+    }
+
+    public static void setGlobalVariables(){
         int []vars = new int[6];
-        //Find first line without comments
-        return null;
+       String [] globalVars = instance.configArray.get(0).split(" ");
+       for(int i = 0; i<globalVars.length;i++){
+           vars[i] = Integer.parseInt(globalVars[i]);
+           System.out.println("global variable added: "+vars[i]);
+       }
+       instance.numNodes = vars[0];
+       instance.minPerActive = vars[1];
+       instance.maxPerActive = vars[2];
+       instance.minSendDelay = vars[3];
+       instance.snapshotDelay = vars[4];
+       instance.maxNumber = vars[5];
     }
 }
