@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Change this to your netid
-netid=sxg122830
+netid=psw101020
 
 # Root directory of your project
-PROJDIR=/people/cs/s/sxg122830/TestProj
+PROJDIR=/home/013/p/ps/psw101020/dev/CS6378/Project1
 
 # Directory where the config file is located on your local system
 CONFIGLOCAL=$HOME/launch/config.txt
@@ -13,8 +13,7 @@ CONFIGLOCAL=$HOME/launch/config.txt
 BINDIR=$PROJDIR/bin
 
 # Your main project class
-PROG=HelloWorld
-
+PROG=Start
 n=0
 
 cat $CONFIGLOCAL | sed -e "s/#.*//" | sed -e "/^\s*$/d" |
