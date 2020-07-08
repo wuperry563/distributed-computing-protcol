@@ -6,7 +6,6 @@
  * node generates a random value and adds its own value while passing the
  * message to the next node.
  */
-import model.NodeInfo;
 
 import java.io.*;
 import java.net.*;
