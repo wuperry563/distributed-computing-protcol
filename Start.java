@@ -40,13 +40,13 @@ public class Start {
 
     public static void main(String... args) throws Exception {
         int nodeNumber = Integer.parseInt(args[0]);
-        String config_path;
+        String config_path = args[1];
         /**
          * To run the program manually without passing command line arguments
          * int no_of_node = 4;
          *
          */
-        config_path = "config.txt";
+//        config_path = "config.txt";
         Parser.getInstance(config_path);
         Start start = new Start(nodeNumber, config_path);
         start.startNode(nodeNumber);
