@@ -128,7 +128,8 @@ public class Node {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
                 PrintWriter writer = new PrintWriter(sock.getOutputStream());
                 String message = reader.readLine();
-                System.out.println("Message Received: " +message );
+                writer.println("Message Received: " +message);
+                System.out.println("Message Received: " +message);
                 if(messagesSentLessThanMax()){
                     System.out.println(id+"terminating to activate node to send messages.");
                     shouldClose = true;
