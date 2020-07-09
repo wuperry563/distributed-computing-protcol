@@ -87,14 +87,16 @@ public class Node {
                 Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
                 PrintWriter writer = new PrintWriter(client.getOutputStream());
 		        System.out.println(id+"will write to node"+ targetNode.getHostName());
-                //writer.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
-                Thread.sleep(Parser.minSendDelay);
-                messagesSent++;
+                writer.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
             }
             catch(Exception e){
                 e.printStackTrace();
             }
-            messagesToSend++;
+            finally{
+                messagesSent++;
+                messagesToSend++;
+                Thread.sleep(Parser.minSendDelay);
+            }
         }
         listen();
     }
@@ -102,11 +104,6 @@ public class Node {
     private int getRandomNodeFromNeighbors() {
         NodeInfo node = Parser.instance.nodes.get(id);
         List<Integer> neighbors = node.getNeighbors();
-        //check OBOB:
-        //Origin: Inclusive, Bound: Exclusive.
-        //Exclude the size of the array?
-        //array.size = 2
-        //index = 0, 1.
         int index = ThreadLocalRandom.current().nextInt(0,neighbors.size());
         int pickedNode = neighbors.get(index);
         return pickedNode;
