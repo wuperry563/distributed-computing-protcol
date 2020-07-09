@@ -77,7 +77,9 @@ public class Node {
         int min = Parser.instance.minPerActive;
         int max = Parser.instance.maxPerActive;
         int messagesToSend = ThreadLocalRandom.current().nextInt(min,1+max);
-        for(int i = 0 ; i< messagesToSend ; i++){
+
+        int index = 0;
+        while(messagesSentLessThanMax() && index < messagesToSend){
             int nodeToMessage = getRandomNodeFromNeighbors();
             NodeInfo targetNode = Parser.nodes.get(nodeToMessage);
             try{
@@ -91,6 +93,7 @@ public class Node {
             catch(Exception e){
                 e.printStackTrace();
             }
+            messagesToSend++;
         }
         listen();
     }
@@ -116,7 +119,6 @@ public class Node {
                 Parser parser = Parser.getInstance("");
                 NodeInfo node = parser.nodes.get(instance.id);
                 int port = node.getListenPort();
-                System.out.println(instance.id+ "listening on "+ port);
                 writer.println(instance.id+ "listening on "+ port);
                 ServerSocket socket = new ServerSocket(port);
                 System.out.println(id + "will listen on " +port);
@@ -127,7 +129,7 @@ public class Node {
                 PrintWriter writer = new PrintWriter(sock.getOutputStream());
                 String message = reader.readLine();
                 System.out.println("Message Received: " +message );
-                if(shouldActivate()){
+                if(messagesSentLessThanMax()){
                     System.out.println(id+"terminating to activate node to send messages.");
                     shouldClose = true;
                     writer.close();
@@ -146,7 +148,7 @@ public class Node {
         }
     }
 
-    private boolean shouldActivate() {
+    private boolean messagesSentLessThanMax() {
         return Parser.instance.maxNumber > instance.messagesSent;
     }
 }
