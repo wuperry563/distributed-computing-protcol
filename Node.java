@@ -83,7 +83,8 @@ public class Node {
             try{
                 Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
                 PrintWriter writer = new PrintWriter(client.getOutputStream());
-                writer.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
+		System.out.println(id+"will write to node"+ targetNode.getHostName());
+                //writer.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
                 Thread.sleep(Parser.minSendDelay);
                 messagesSent++;
             }
@@ -117,26 +118,28 @@ public class Node {
                 int port = node.getListenPort();
                 System.out.println(instance.id+ "listening on "+ port);
                 writer.println(instance.id+ "listening on "+ port);
-                ServerSocket socket = new ServerSocket(port);
-                Socket sock = socket.accept();
-                sock.setSoTimeout(instance.SOCKET_TIMEOUT);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-                PrintWriter writer = new PrintWriter(sock.getOutputStream());
-                String message = reader.readLine();
-                System.out.println("Message Received: " +message );
+                //ServerSocket socket = new ServerSocket(port);
+		System.out.println(id + "will listen on " +port);
+		Thread.sleep(1000);
+                //Socket sock = socket.accept();
+                //sock.setSoTimeout(instance.SOCKET_TIMEOUT);
+                //BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+                //PrintWriter writer = new PrintWriter(sock.getOutputStream());
+                //String message = reader.readLine();
+                //System.out.println("Message Received: " +message );
                 if(shouldActivate()){
-                    System.out.println("terminating to activate node to send messages.");
+                    System.out.println(id+"terminating to activate node to send messages.");
                     shouldClose = true;
-                    writer.close();
-                    reader.close();
-                    sock.close();
+                    //writer.close();
+                    //reader.close();
+                    //sock.close();
                     // move to active check?
                     instance.activate();
                 }else{
                     //keep listening?
                 }
 
-            } catch(IOException ex){
+            } catch(Exception ex){
                 ex.printStackTrace();
             }
         }

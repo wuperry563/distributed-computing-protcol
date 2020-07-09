@@ -31,7 +31,7 @@ cat $CONFIGLOCAL | sed -e "s/#.*//" | sed -e "/^\s*$/d" |
 	
 	echo $p
 	echo $host
-	ssh -o StrictHostKeyChecking=no $netid@$host java -cp $BINDIR $PROG $p $CONFIGLOCAL; exec bash &
+	ssh -o StrictHostKeyChecking=no $netid@$host java -cp $BINDIR $PROG $p $CONFIGLOCAL &
 
         n=$(( n + 1 ))
     done
