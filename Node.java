@@ -72,19 +72,18 @@ public class Node {
     //Check if messages are full first, otherwise stay passive.
     //If not full, then turn into client, random pick neighbors, and send those messages with MinSendDelay,
     //With Between minPerActive/maxPerActive messages
-    public void activate() {
+    public void activate() throws Exception{
         //should check if message is full? or "listen's" job?
         int min = Parser.instance.minPerActive;
         int max = Parser.instance.maxPerActive;
         int messagesToSend = ThreadLocalRandom.current().nextInt(min,1+max);
-
+        Thread.sleep(5000);
         int index = 0;
         while(messagesSentLessThanMax() && index < messagesToSend){
             int nodeToMessage = getRandomNodeFromNeighbors();
             NodeInfo targetNode = Parser.nodes.get(nodeToMessage);
             try{
-		Thread.sleep(5000);
-		System.out.println("opening socket to write to " + targetNode.getHostName());
+		        System.out.println("opening socket to write to " + targetNode.getHostName());
                 Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
                 PrintWriter writer = new PrintWriter(client.getOutputStream());
 		        System.out.println(id+"will write to node"+ targetNode.getHostName());
