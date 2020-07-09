@@ -78,7 +78,7 @@ public class Node {
         int min = Parser.instance.minPerActive;
         int max = Parser.instance.maxPerActive;
         int messagesToSend = ThreadLocalRandom.current().nextInt(min,1+max);
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         int index = 0;
         while(messagesSentLessThanMax() && index < messagesToSend){
             int nodeToMessage = getRandomNodeFromNeighbors();
@@ -91,6 +91,7 @@ public class Node {
                 printWriter.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
             }
             catch(Exception e){
+                System.out.println("Connection Exception");
 //                e.printStackTrace();
             }
             finally{
