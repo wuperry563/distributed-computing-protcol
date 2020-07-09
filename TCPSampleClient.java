@@ -16,16 +16,16 @@ public class TCPSampleClient
             
             System.out.println("creating reader and writer");
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             System.out.println("done reader");
             writer.println(message);
             System.out.println("done writing writer");
-            message = reader.readLine();
+//            message = reader.readLine();
             System.out.println("done reading");
 	        System.out.println("oepning reader");
             //The method readLine is blocked until a message is received
             System.out.println("Server says:" + message);
-            reader.close();
+//            reader.close();
             writer.close();
         }
         catch(IOException ex)
