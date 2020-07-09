@@ -111,9 +111,13 @@ public class Node {
         boolean shouldClose = false;
         while(!shouldClose){
             try{
+
                 Parser parser = Parser.getInstance("");
                 NodeInfo node = parser.nodes.get(instance.id);
-                ServerSocket socket = new ServerSocket(node.getListenPort());
+                int port = node.getListenPort();
+                System.out.println(instance.id+ "listening on "+ port);
+                writer.println(instance.id+ "listening on "+ port);
+                ServerSocket socket = new ServerSocket(port);
                 Socket sock = socket.accept();
                 sock.setSoTimeout(instance.SOCKET_TIMEOUT);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
