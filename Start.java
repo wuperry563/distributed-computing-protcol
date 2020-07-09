@@ -36,7 +36,10 @@ public class Start {
     private void startNode(int id) throws Exception{
         Node n = Node.getInstance(id);
         int last = Parser.instance.numNodes-1;
+        System.out.println(last);
+
         if(last == id){
+            System.out.println("activating"+id);
             n.activate();
         }
         else{
