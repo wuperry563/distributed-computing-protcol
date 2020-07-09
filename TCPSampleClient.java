@@ -14,13 +14,16 @@ public class TCPSampleClient
             //Read messages from server. Input stream are in bytes. They are converted to characters by InputStreamReader
             //Characters from the InputStreamReader are converted to buffered characters by BufferedReader
             
-            System.out.println("creating writer");
+            System.out.println("creating reader and writer");
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            System.out.println("done reader");
             writer.println(message);
+            System.out.println("done writing writer");
             message = reader.readLine();
+            System.out.println("done reading writer");
             writer.close();
-	    System.out.println("oepning reader");
+	        System.out.println("oepning reader");
             //The method readLine is blocked until a message is received
             System.out.println("Server says:" + message);
             reader.close();

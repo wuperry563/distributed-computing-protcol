@@ -116,7 +116,6 @@ public class Node {
         boolean shouldClose = false;
         while(!shouldClose){
             try{
-
                 Parser parser = Parser.getInstance("");
                 NodeInfo node = parser.nodes.get(instance.id);
                 int port = node.getListenPort();
