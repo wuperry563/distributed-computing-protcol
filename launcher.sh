@@ -7,7 +7,7 @@ netid=psw101020
 PROJDIR=~/dev/CS6378/Project1
 
 # Directory where the config file is located on your local system
-CONFIGLOCAL=$HOME/CS6378/Project1/config.txt
+CONFIGLOCAL=$HOME/dev/CS6378/Project1/config.txt
 
 # Directory your java classes are in
 BINDIR=$PROJDIR
@@ -16,18 +16,22 @@ BINDIR=$PROJDIR
 PROG=Start
 
 n=0
+echo $CONFIGLOCAL
 
 cat $CONFIGLOCAL | sed -e "s/#.*//" | sed -e "/^\s*$/d" |
 (
     read i
-    echo $i
-    while [[ $n -lt $i ]]
+	echo $i
+    totalNodes=$(echo $i | awk '{print $1}')
+    while [[ $n -lt $totalNodes ]]
     do
     	read line
     	p=$( echo $line | awk '{ print $1 }' )
         host=$( echo $line | awk '{ print $2 }' )
 	
-	gnome-terminal -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $netid@$host java -cp $BINDIR $PROG $p; exec bash" &
+	echo $p
+	echo $host
+	ssh -o StrictHostKeyChecking=no $netid@$host java -cp $BINDIR $PROG $p $CONFIGLOCAL; exec bash &
 
         n=$(( n + 1 ))
     done
