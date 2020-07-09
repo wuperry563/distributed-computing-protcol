@@ -51,6 +51,7 @@ public class Node {
 
     public static Node getInstance(int id) throws Exception{
         if(instance == null){
+            System.out.println("ID IS::" + id);
             Node.instance = new Node();
             instance.id = id;
             writer = new PrintWriter("config-psw101020-" + id + ".out", "UTF-8");
@@ -64,7 +65,7 @@ public class Node {
         try{
             listen();
         }catch(Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -85,17 +86,18 @@ public class Node {
             Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
             try{
 		        System.out.println("opening socket to write to " + targetNode.getHostName());
-                PrintWriter writer = new PrintWriter(client.getOutputStream());
+                PrintWriter printWriter = new PrintWriter(client.getOutputStream());
 		        System.out.println(id+"will write to node"+ targetNode.getHostName());
-                writer.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
+                printWriter.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
             }
             catch(Exception e){
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             finally{
                 messagesSent++;
                 messagesToSend++;
-                writer.close();
+                //TODO: Print writer to config file
+//                writer.close();
                 client.close();
                 Thread.sleep(Parser.minSendDelay);
             }
@@ -143,7 +145,7 @@ public class Node {
                 }
 
             } catch(Exception ex){
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
         }
     }

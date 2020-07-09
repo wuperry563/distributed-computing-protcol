@@ -29,14 +29,11 @@ public class Start {
         this.config_path = config_path;
     }
 
-//    public void run() {
-//        startNode(id);
-//    }
-
     private void startNode(int id) throws Exception{
         Node n = Node.getInstance(id);
         int last = Parser.instance.numNodes-1;
         System.out.println("LAST NODE (ACTIVATED) IS:"+last);
+        System.out.println("THIS NODE (ACTIVATED) IS:"+ id);
 
         if(last == id){
             System.out.println("activating"+id);
