@@ -83,7 +83,7 @@ public class Node {
             try{
                 Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
                 PrintWriter writer = new PrintWriter(client.getOutputStream());
-                writer.println(MESSAGE_TO_SEND);
+                writer.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
                 Thread.sleep(Parser.minSendDelay);
                 messagesSent++;
             }

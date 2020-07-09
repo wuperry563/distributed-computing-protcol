@@ -35,7 +35,13 @@ public class Start {
 
     private void startNode(int id) throws Exception{
         Node n = Node.getInstance(id);
-        n.activate();
+        int last = Parser.instance.numNodes-1;
+        if(last == id){
+            n.activate();
+        }
+        else{
+            n.listen();
+        }
     }
 
     public static void main(String... args) throws Exception {
