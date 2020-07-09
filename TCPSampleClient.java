@@ -15,7 +15,7 @@ public class TCPSampleClient
             //Characters from the InputStreamReader are converted to buffered characters by BufferedReader
             
             System.out.println("creating reader and writer");
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
+            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(),true);
 
             System.out.println("done reader");
             writer.println(message);
@@ -28,6 +28,7 @@ public class TCPSampleClient
             System.out.println("Server says:" + message);
             reader.close();
             writer.close();
+            clientSocket.close();
         }
         catch(IOException ex)
         {
