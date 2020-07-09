@@ -82,9 +82,9 @@ public class Node {
         while(messagesSentLessThanMax() && index < messagesToSend){
             int nodeToMessage = getRandomNodeFromNeighbors();
             NodeInfo targetNode = Parser.nodes.get(nodeToMessage);
+            Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
             try{
 		        System.out.println("opening socket to write to " + targetNode.getHostName());
-                Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
                 PrintWriter writer = new PrintWriter(client.getOutputStream());
 		        System.out.println(id+"will write to node"+ targetNode.getHostName());
                 writer.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
@@ -95,6 +95,8 @@ public class Node {
             finally{
                 messagesSent++;
                 messagesToSend++;
+                writer.close();
+                client.close();
                 Thread.sleep(Parser.minSendDelay);
             }
         }

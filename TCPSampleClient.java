@@ -16,7 +16,6 @@ public class TCPSampleClient
             
             System.out.println("creating reader and writer");
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(),true);
-
             System.out.println("done reader");
             writer.println(message);
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
