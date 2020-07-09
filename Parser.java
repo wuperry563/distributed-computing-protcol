@@ -34,7 +34,7 @@ public class Parser {
         NodeInfo node;
 //        List<Integer> neighbors;
         for(int i = 0; i<instance.numNodes; i++){
-            System.out.println(configArray.get(i+1));
+//            System.out.println(configArray.get(i+1));
             String []configNode = configArray.get(i+1).split(" ");
             node = new NodeInfo();
             int id = Integer.parseInt(configNode[0]);
@@ -69,7 +69,7 @@ public class Parser {
        String [] globalVars = instance.configArray.get(0).split(" ");
        for(int i = 0; i<globalVars.length;i++){
            vars[i] = Integer.parseInt(globalVars[i]);
-           System.out.println("global variable added: "+vars[i]);
+//           System.out.println("global variable added: "+vars[i]);
        }
        instance.numNodes = vars[0];
        instance.minPerActive = vars[1];

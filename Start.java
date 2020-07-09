@@ -36,15 +36,15 @@ public class Start {
     private void startNode(int id) throws Exception{
         Node n = Node.getInstance(id);
         int last = Parser.instance.numNodes-1;
-        System.out.println(last);
+        System.out.println("LAST NODE (ACTIVATED) IS:"+last);
 
-//        if(last == id){
-//            System.out.println("activating"+id);
-//            n.activate();
-//        }
-//        else{
+        if(last == id){
+            System.out.println("activating"+id);
+            n.activate();
+        }
+        else{
             n.listen();
-//        }
+        }
     }
 
     public static void main(String... args) throws Exception {
