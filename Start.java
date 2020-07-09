@@ -38,13 +38,13 @@ public class Start {
         int last = Parser.instance.numNodes-1;
         System.out.println(last);
 
-        if(last == id){
-            System.out.println("activating"+id);
-            n.activate();
-        }
-        else{
+//        if(last == id){
+//            System.out.println("activating"+id);
+//            n.activate();
+//        }
+//        else{
             n.listen();
-        }
+//        }
     }
 
     public static void main(String... args) throws Exception {
