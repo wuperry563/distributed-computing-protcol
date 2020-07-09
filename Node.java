@@ -133,6 +133,7 @@ public class Node {
                     writer.close();
                     reader.close();
                     sock.close();
+                    socket.close();
 //                     move to active check?
                     instance.activate();
                 }else{
