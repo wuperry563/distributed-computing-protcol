@@ -21,12 +21,12 @@ public class TCPSampleClient
             writer.println(message);
             System.out.println("done writing writer");
             message = reader.readLine();
-            System.out.println("done reading writer");
-            writer.close();
+            System.out.println("done reading");
 	        System.out.println("oepning reader");
             //The method readLine is blocked until a message is received
             System.out.println("Server says:" + message);
             reader.close();
+            writer.close();
         }
         catch(IOException ex)
         {
