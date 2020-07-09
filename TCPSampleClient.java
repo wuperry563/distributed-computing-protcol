@@ -9,7 +9,7 @@ public class TCPSampleClient
         try
         {
             //Create a client socket and connect to server at 127.0.0.1 port 5000
-            Socket clientSocket = new Socket("localhost",1232);
+            Socket clientSocket = new Socket("dc02",1232);
             //Read messages from server. Input stream are in bytes. They are converted to characters by InputStreamReader
             //Characters from the InputStreamReader are converted to buffered characters by BufferedReader
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());

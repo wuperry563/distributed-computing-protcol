@@ -83,6 +83,8 @@ public class Node {
             int nodeToMessage = getRandomNodeFromNeighbors();
             NodeInfo targetNode = Parser.nodes.get(nodeToMessage);
             try{
+		Thread.sleep(5000);
+		System.out.println("opening socket to write to " + targetNode.getHostName());
                 Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
                 PrintWriter writer = new PrintWriter(client.getOutputStream());
 		        System.out.println(id+"will write to node"+ targetNode.getHostName());
