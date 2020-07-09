@@ -42,7 +42,7 @@ public class Node {
     private static Node instance = null;
     private static int id = -1;
     public static int messagesSent = 0;
-    private static final int SOCKET_TIMEOUT = 20000;
+    private static final int SOCKET_TIMEOUT = 30000;
     private static final String MESSAGE_TO_SEND = "lmao";
     private static PrintWriter writer = null;
 
@@ -60,16 +60,6 @@ public class Node {
         return Node.instance;
     }
 
-    //Listen as a server for an incoming message at specified port from Parser
-    public void passive() {
-        try{
-            listen();
-        }catch(Exception e){
-//            e.printStackTrace();
-        }
-    }
-
-
     //Check if messages are full first, otherwise stay passive.
     //If not full, then turn into client, random pick neighbors, and send those messages with MinSendDelay,
     //With Between minPerActive/maxPerActive messages
@@ -84,9 +74,9 @@ public class Node {
             int nodeToMessage = getRandomNodeFromNeighbors();
             NodeInfo targetNode = Parser.nodes.get(nodeToMessage);
             Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
+            PrintWriter printWriter = new PrintWriter(client.getOutputStream());
             try{
 		        System.out.println("opening socket to write to " + targetNode.getHostName());
-                PrintWriter printWriter = new PrintWriter(client.getOutputStream());
 		        System.out.println(id+"will write to node"+ targetNode.getHostName());
                 printWriter.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
             }
@@ -98,7 +88,7 @@ public class Node {
                 messagesSent++;
                 messagesToSend++;
                 //TODO: Print writer to config file
-//                writer.close();
+                printWriter.close();
                 client.close();
                 Thread.sleep(Parser.minSendDelay);
             }
