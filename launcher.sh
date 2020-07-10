@@ -13,7 +13,7 @@ CONFIGLOCAL=$HOME/dev/CS6378/Project1/config.txt
 BINDIR=$PROJDIR
 
 # Your main project class
-PROG=Start
+PROG=$HOME/dev/CS6378/Project1/node.jar
 
 n=0
 echo $CONFIGLOCAL
@@ -31,7 +31,7 @@ cat $CONFIGLOCAL | sed -e "s/#.*//" | sed -e "/^\s*$/d" |
 	
 	echo $p
 	echo $host
-	ssh -o StrictHostKeyChecking=no $netid@$host java -cp $BINDIR $PROG $p $CONFIGLOCAL &
+	ssh -o StrictHostKeyChecking=no $netid@$host java -jar $PROG $p $CONFIGLOCAL &
 
         n=$(( n + 1 ))
     done
