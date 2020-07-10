@@ -1,3 +1,4 @@
+import javax.swing.tree.TreeNode;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,6 +13,8 @@ public class Parser {
     private static List<String> configArray;
     public static int numNodes, minPerActive, maxPerActive, minSendDelay, snapshotDelay, maxNumber;
     public static Map<Integer,NodeInfo> nodes;
+    public static TreeNode curTreeNode = null;
+    public static int MESSAGE_SIZE = 50;
 
     private Parser() {
     }
