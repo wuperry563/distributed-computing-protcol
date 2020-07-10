@@ -7,6 +7,9 @@
  * message to the next node.
  */
 
+import com.sun.nio.sctp.SctpChannel;
+import com.sun.nio.sctp.SctpServerChannel;
+
 import java.io.*;
 import java.net.*;
 import java.util.List;
@@ -54,10 +57,15 @@ public class Node {
             System.out.println("ID IS::" + id);
             Node.instance = new Node();
             instance.id = id;
-            writer = new PrintWriter("config-psw101020-" + id + ".out", "UTF-8");
+            writer = new PrintWriter("config-" + id + ".out", "UTF-8");
             messagesSent = 0;
+            initializeSockets();
         }
         return Node.instance;
+    }
+
+    private static void initializeSockets() {
+
     }
 
     //Check if messages are full first, otherwise stay passive.
@@ -73,12 +81,13 @@ public class Node {
         while(messagesSentLessThanMax() && index < messagesToSend){
             int nodeToMessage = getRandomNodeFromNeighbors();
             NodeInfo targetNode = Parser.nodes.get(nodeToMessage);
-            Socket client = new Socket(targetNode.getHostName(),targetNode.getListenPort());
-            PrintWriter printWriter = new PrintWriter(client.getOutputStream());
+            SocketAddress socketAddress = new InetSocketAddress(targetNode.getHostName(),targetNode.getListenPort());
+            SctpChannel client = SctpChannel.open();
+            client.connect(socketAddress);
             try{
 		        System.out.println("opening socket to write to " + targetNode.getHostName());
 		        System.out.println(id+"will write to node"+ targetNode.getHostName());
-                printWriter.println("Node: "+instance.id +"Sending message: " + MESSAGE_TO_SEND);
+                Channel.send(client,id+"");
             }
             catch(Exception e){
                 System.out.println("Connection Exception");
@@ -88,7 +97,6 @@ public class Node {
                 messagesSent++;
                 messagesToSend++;
                 //TODO: Print writer to config file
-                printWriter.close();
                 client.close();
                 Thread.sleep(Parser.minSendDelay);
             }
@@ -129,7 +137,7 @@ public class Node {
                     reader.close();
                     sock.close();
                     socket.close();
-//                     move to active check?
+                    //TODO:move to active check?
                     instance.activate();
                 }else{
                     Thread.sleep(5000);
